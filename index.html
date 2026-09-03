@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Star Drop: Simulador de Recompensas gratis</title>
+<meta name="description" content="Star Drop es un simulador gratuito para abrir gotas de recompensas, coleccionar más de 20 personajes originales y skins, y ver animaciones de apertura estilo estelar. Sin dinero real, sin anuncios, 100% en tu navegador.">
+<meta name="keywords" content="abrir gotas, simulador de recompensas, coleccionar personajes, juego gratis, gotas de estrella, skins, rarezas, mítica, legendaria, juego web móvil">
+<link rel="canonical" href="https://adrianezd.github.io/star-drop-opener/">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Star Drop: Simulador de Recompensas">
+<meta property="og:description" content="Abre Gotas de Estrella, colecciona personajes y skins originales, y disfruta animaciones de apertura sin gastar dinero real.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://adrianezd.github.io/star-drop-opener/">
+<meta property="og:image" content="https://adrianezd.github.io/star-drop-opener/favicon.svg">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Star Drop: Simulador de Recompensas">
+<meta name="twitter:description" content="Abre Gotas de Estrella, colecciona personajes y skins originales, y disfruta animaciones de apertura sin gastar dinero real.">
+<meta name="twitter:image" content="https://adrianezd.github.io/star-drop-opener/favicon.svg">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b0620">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Game",
+  "name": "Star Drop: Simulador de Recompensas",
+  "description": "Simulador gratuito para abrir gotas de recompensas, coleccionar personajes y skins originales con animaciones de apertura. Sin dinero real, sin anuncios.",
+  "genre": ["Casual", "Collector", "Simulation"],
+  "applicationCategory": "GameApplication",
+  "gamePlatform": "Web Browser",
+  "url": "https://adrianezd.github.io/star-drop-opener/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+</head>
+<body>
+
+<div id="particle-layer" aria-hidden="true"></div>
+<div id="shake-flash" aria-hidden="true"></div>
+
+<header class="app-header">
+  <div class="header-inner">
+    <img src="favicon.svg" alt="" class="logo-icon" width="36" height="36">
+    <div>
+      <h1>Star Drop <span class="subtitle">Simulador de Recompensas</span></h1>
+    </div>
+  </div>
+  <div class="currency-bar" id="currency-bar">
+    <div class="currency-pill" id="fichas-pill" title="Fichas de Estrella">
+      <span class="cur-icon">💠</span>
+      <span id="fichas-count">0</span>
+    </div>
+    <div class="currency-pill" id="coins-pill" title="Monedas">
+      <span class="cur-icon">🪙</span>
+      <span id="coins-count">0</span>
+    </div>
+    <div class="currency-pill" id="power-pill" title="Puntos de Poder">
+      <span class="cur-icon">🔷</span>
+      <span id="power-count">0</span>
+    </div>
+    <div class="currency-pill" id="gadget-pill" title="Gadgets">
+      <span class="cur-icon">🛠️</span>
+      <span id="gadget-count">0</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="ticket-info card" aria-labelledby="ticket-heading">
+    <h2 id="ticket-heading" class="visually-hidden">Fichas de Estrella</h2>
+    <p>Próxima ficha gratis en <strong id="next-ticket-timer">--:--</strong> · Máximo <span id="ticket-cap">0</span></p>
+    <button id="free-drop-btn" class="btn btn-secondary" type="button">
+      🎁 Gota gratis (<span id="free-drop-timer">lista</span>)
+    </button>
+  </section>
+
+  <section id="how-it-works" class="card" aria-labelledby="how-heading">
+    <h2 id="how-heading">Cómo funciona</h2>
+    <ol class="how-list">
+      <li>Acumulas <strong>Fichas de Estrella</strong> gratis con el tiempo, sin pagar nunca nada real.</li>
+      <li>Usa las fichas para <strong>abrir Gotas</strong> de distinta rareza y mira la animación de apertura.</li>
+      <li>Cada gota entrega Monedas, Puntos de Poder, Gadgets, un <strong>Personaje nuevo</strong> o una <strong>Skin</strong>.</li>
+      <li>Cuantas más rachas sin Legendaria, más sube tu suerte: hay un sistema de <strong>piedad</strong> que garantiza una recompensa Legendaria como muy tarde cada 30 gotas.</li>
+      <li>Colecciona los más de 20 personajes originales y sus skins en la pestaña Colección.</li>
+    </ol>
+  </section>
+
+  <nav class="tabs" aria-label="Secciones de la aplicación">
+    <button class="tab-btn active" data-tab="tab-drops" type="button">🌟 Gotas</button>
+    <button class="tab-btn" data-tab="tab-collection" type="button">📚 Colección</button>
+    <button class="tab-btn" data-tab="tab-stats" type="button">📊 Estadísticas</button>
+  </nav>
+
+  <section id="tab-drops" class="tab-panel active" aria-labelledby="drops-heading">
+    <h2 id="drops-heading">Elige una Gota para abrir</h2>
+    <p class="pity-note">Racha sin Legendaria: <strong id="pity-count">0</strong>/<span id="pity-max">30</span></p>
+    <div id="drop-grid" class="drop-grid"></div>
+  </section>
+
+  <section id="tab-collection" class="tab-panel" aria-labelledby="collection-heading">
+    <h2 id="collection-heading">Tu Colección</h2>
+    <p class="collection-summary">Personajes desbloqueados: <strong id="chars-unlocked">0</strong>/<span id="chars-total">0</span> · Skins: <strong id="skins-unlocked">0</strong>/<span id="skins-total">0</span></p>
+    <div id="collection-grid" class="collection-grid"></div>
+  </section>
+
+  <section id="tab-stats" class="tab-panel" aria-labelledby="stats-heading">
+    <h2 id="stats-heading">Estadísticas</h2>
+    <div class="stats-grid">
+      <div class="stat-box"><span class="stat-value" id="stat-opens">0</span><span class="stat-label">Gotas abiertas</span></div>
+      <div class="stat-box"><span class="stat-value" id="stat-coins">0</span><span class="stat-label">Monedas totales</span></div>
+      <div class="stat-box"><span class="stat-value" id="stat-power">0</span><span class="stat-label">Puntos de Poder totales</span></div>
+      <div class="stat-box"><span class="stat-value" id="stat-gadgets">0</span><span class="stat-label">Gadgets totales</span></div>
+      <div class="stat-box"><span class="stat-value" id="stat-legendaries">0</span><span class="stat-label">Legendarias obtenidas</span></div>
+      <div class="stat-box"><span class="stat-value" id="stat-chars">0</span><span class="stat-label">Personajes nuevos</span></div>
+    </div>
+    <h3>Historial reciente</h3>
+    <ul id="history-list" class="history-list"></ul>
+    <button id="reset-btn" class="btn btn-danger" type="button">Reiniciar progreso</button>
+  </section>
+</main>
+
+<!-- Opening overlay -->
+<div id="open-overlay" class="open-overlay" hidden>
+  <div class="open-stage">
+    <div id="open-orb" class="open-orb">
+      <span id="open-orb-icon">🌟</span>
+    </div>
+    <p id="open-hint" class="open-hint">Toca la gota para abrirla</p>
+  </div>
+</div>
+
+<!-- Reveal overlay -->
+<div id="reveal-overlay" class="reveal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="reveal-name">
+  <div class="reveal-card" id="reveal-card">
+    <p class="reveal-rarity" id="reveal-rarity">Común</p>
+    <div class="reveal-icon" id="reveal-icon">🪙</div>
+    <h3 id="reveal-name">Nombre</h3>
+    <p class="reveal-desc" id="reveal-desc">Descripción</p>
+    <p class="reveal-new" id="reveal-new" hidden>¡Nuevo desbloqueo!</p>
+    <button id="reveal-continue" class="btn btn-primary" type="button">Continuar</button>
+  </div>
+</div>
+
+<footer class="app-footer">
+  <p>Proyecto de fan hecho por diversión, sin dinero real ni compras. No afiliado a ninguna franquicia comercial existente.</p>
+  <p class="footer-small">Todos los personajes, skins y nombres son ficticios y originales. Progreso guardado solo en este navegador.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

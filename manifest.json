@@ -1,0 +1,20 @@
+{
+  "name": "Star Drop: Simulador de Recompensas",
+  "short_name": "Star Drop",
+  "description": "Abre Gotas de Estrella, colecciona personajes y skins originales, sin dinero real.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0620",
+  "theme_color": "#0b0620",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
