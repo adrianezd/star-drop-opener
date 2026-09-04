@@ -24,6 +24,16 @@
 
 * { box-sizing: border-box; }
 
+/* El atributo/propiedad `hidden` debe ganar siempre a cualquier `display`
+   declarado en una clase (p. ej. los overlays usan `display: flex`), ya que
+   por cascada CSS una regla de autor con la misma especificidad que la hoja
+   de estilos del user-agent (`[hidden] { display: none }`) puede perder si
+   no se refuerza. Sin esto, los overlays con `hidden` seguían renderizándose
+   a pantalla completa y bloqueaban todos los clics de la app. */
+[hidden] {
+  display: none !important;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
 }
