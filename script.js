@@ -428,7 +428,7 @@ function renderDropGrid() {
       <div class="drop-orb-preview">${tier.emoji}</div>
       <div class="drop-name">${tier.name}</div>
       <div class="drop-odds">${oddsText}</div>
-      <div class="drop-cost">💠 ${tier.cost}</div>
+      <div class="drop-cost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 L14 10 L21 12 L14 14 L12 21 L10 14 L3 12 L10 10 Z"/></svg> ${tier.cost}</div>
       <button type="button" class="btn btn-secondary drop-open-btn" data-open="${tier.id}">Abrir</button>
     `;
     dropGridEl.appendChild(card);
@@ -501,7 +501,7 @@ function renderStats() {
     state.history.forEach(h => {
       const li = document.createElement('li');
       const time = new Date(h.ts).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-      li.innerHTML = `<span>${RARITY_ICON[h.rarity]} ${h.label}</span><span>${time}</span>`;
+      li.innerHTML = `<span class="history-entry"><span class="history-dot" style="background:${getRarityColor(h.rarity)}"></span>${h.label}</span><span>${time}</span>`;
       historyListEl.appendChild(li);
     });
   }
@@ -584,7 +584,7 @@ function finishOpen(tier) {
 
 function showReveal(reward) {
   revealCard.className = 'reveal-card rarity-' + reward.rarity + '-card';
-  revealRarity.textContent = `${RARITY_ICON[reward.rarity]} ${RARITY_LABEL[reward.rarity]}`;
+  revealRarity.textContent = RARITY_LABEL[reward.rarity];
   revealRarity.style.color = getRarityColor(reward.rarity);
   revealIcon.textContent = rewardIconEmoji(reward);
 

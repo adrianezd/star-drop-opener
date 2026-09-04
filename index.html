@@ -13,18 +13,22 @@
 <meta property="og:description" content="Abre Gotas de Estrella, colecciona personajes y skins originales, y disfruta animaciones de apertura sin gastar dinero real.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://adrianezd.github.io/star-drop-opener/">
-<meta property="og:image" content="https://adrianezd.github.io/star-drop-opener/favicon.svg">
+<meta property="og:image" content="https://adrianezd.github.io/star-drop-opener/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Star Drop">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Star Drop: Simulador de Recompensas">
 <meta name="twitter:description" content="Abre Gotas de Estrella, colecciona personajes y skins originales, y disfruta animaciones de apertura sin gastar dinero real.">
-<meta name="twitter:image" content="https://adrianezd.github.io/star-drop-opener/favicon.svg">
+<meta name="twitter:image" content="https://adrianezd.github.io/star-drop-opener/og-image.png">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="favicon.svg">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0b0620">
+<meta name="theme-color" content="#0d0d12">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,11 +40,15 @@
   "@context": "https://schema.org",
   "@type": "Game",
   "name": "Star Drop: Simulador de Recompensas",
-  "description": "Simulador gratuito para abrir gotas de recompensas, coleccionar personajes y skins originales con animaciones de apertura. Sin dinero real, sin anuncios.",
+  "description": "Simulador gratuito para abrir gotas de recompensas, coleccionar más de 20 personajes y skins originales con animaciones de apertura estilo estelar. Sin dinero real, sin anuncios.",
   "genre": ["Casual", "Collector", "Simulation"],
   "applicationCategory": "GameApplication",
   "gamePlatform": "Web Browser",
+  "operatingSystem": "Any",
   "url": "https://adrianezd.github.io/star-drop-opener/",
+  "image": "https://adrianezd.github.io/star-drop-opener/og-image.png",
+  "inLanguage": "es",
+  "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -63,19 +71,19 @@
   </div>
   <div class="currency-bar" id="currency-bar">
     <div class="currency-pill" id="fichas-pill" title="Fichas de Estrella">
-      <span class="cur-icon">💠</span>
+      <span class="cur-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3 L14 10 L21 12 L14 14 L12 21 L10 14 L3 12 L10 10 Z"/></svg></span>
       <span id="fichas-count">0</span>
     </div>
     <div class="currency-pill" id="coins-pill" title="Monedas">
-      <span class="cur-icon">🪙</span>
+      <span class="cur-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/></svg></span>
       <span id="coins-count">0</span>
     </div>
     <div class="currency-pill" id="power-pill" title="Puntos de Poder">
-      <span class="cur-icon">🔷</span>
+      <span class="cur-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M13 3 L5 13 H11 L10 21 L19 11 H13 Z"/></svg></span>
       <span id="power-count">0</span>
     </div>
     <div class="currency-pill" id="gadget-pill" title="Gadgets">
-      <span class="cur-icon">🛠️</span>
+      <span class="cur-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 1 5.4-5.4l-2.6 2.6-2-2z"/></svg></span>
       <span id="gadget-count">0</span>
     </div>
   </div>
@@ -86,7 +94,7 @@
     <h2 id="ticket-heading" class="visually-hidden">Fichas de Estrella</h2>
     <p>Próxima ficha gratis en <strong id="next-ticket-timer">--:--</strong> · Máximo <span id="ticket-cap">0</span></p>
     <button id="free-drop-btn" class="btn btn-secondary" type="button">
-      🎁 Gota gratis (<span id="free-drop-timer">lista</span>)
+      Gota gratis (<span id="free-drop-timer">lista</span>)
     </button>
   </section>
 
@@ -102,9 +110,9 @@
   </section>
 
   <nav class="tabs" aria-label="Secciones de la aplicación">
-    <button class="tab-btn active" data-tab="tab-drops" type="button">🌟 Gotas</button>
-    <button class="tab-btn" data-tab="tab-collection" type="button">📚 Colección</button>
-    <button class="tab-btn" data-tab="tab-stats" type="button">📊 Estadísticas</button>
+    <button class="tab-btn active" data-tab="tab-drops" type="button">Gotas</button>
+    <button class="tab-btn" data-tab="tab-collection" type="button">Colección</button>
+    <button class="tab-btn" data-tab="tab-stats" type="button">Estadísticas</button>
   </nav>
 
   <section id="tab-drops" class="tab-panel active" aria-labelledby="drops-heading">
