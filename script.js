@@ -5,106 +5,159 @@
    Toda la lógica del juego. Sin dependencias externas.
    ========================================================= */
 
-/* ---------- Datos: rarezas ---------- */
-const RARITIES = ['comun', 'rara', 'epica', 'mitica', 'legendaria'];
+/* ---------- Datos: rarezas reales de Brawl Stars ---------- */
+const RARITIES = ['rara', 'superrara', 'epica', 'mitica', 'legendaria', 'ultralegendaria'];
 const RARITY_LABEL = {
-  comun: 'Común',
   rara: 'Rara',
+  superrara: 'Súper Rara',
   epica: 'Épica',
   mitica: 'Mítica',
-  legendaria: 'Legendaria'
+  legendaria: 'Legendaria',
+  ultralegendaria: 'Ultra Legendaria'
 };
 const RARITY_ICON = {
-  comun: '🟢',
-  rara: '🔵',
-  epica: '🟣',
+  rara: '🟩',
+  superrara: '🟦',
+  epica: '🟪',
   mitica: '🌸',
-  legendaria: '⭐'
+  legendaria: '⭐',
+  ultralegendaria: '👑'
 };
 
-/* ---------- Datos: personajes originales (22) ---------- */
+/* ---------- Datos: brawlers reales de Brawl Stars (52) ----------
+   Nombres, rarezas reales, y (cuando se han podido confirmar) un
+   Superpoder y un Gadget reales por brawler. Sin artwork oficial:
+   solo texto/datos y emoji genéricos como icono. Proyecto de fan no
+   oficial, no afiliado a Supercell. */
 const CHARACTERS = [
-  { id: 'chispa-voltia', name: 'Chispa Voltia', type: 'Ataque', emoji: '⚡', rarity: 'comun' },
-  { id: 'roca-grumm', name: 'Roca Grumm', type: 'Defensa', emoji: '🪨', rarity: 'comun' },
-  { id: 'enfermera-lux', name: 'Enfermera Lux', type: 'Apoyo', emoji: '✨', rarity: 'comun' },
-  { id: 'sombra-kex', name: 'Sombra Kex', type: 'Ataque', emoji: '🗡️', rarity: 'comun' },
-  { id: 'tanque-bruno', name: 'Tanque Bruno', type: 'Defensa', emoji: '🛡️', rarity: 'comun' },
-  { id: 'brisa-nix', name: 'Brisa Nix', type: 'Apoyo', emoji: '🍃', rarity: 'comun' },
+  { id: 'shelly', name: 'Shelly', type: 'Ataque', emoji: '💥', rarity: 'rara', starPower: 'Shell Shock', gadget: 'Fast Forward' },
+  { id: 'nita', name: 'Nita', type: 'Apoyo', emoji: '🐻', rarity: 'rara', starPower: 'Bear With Me', gadget: 'Bear Paws' },
+  { id: 'colt', name: 'Colt', type: 'Ataque', emoji: '🤠', rarity: 'rara', starPower: 'Slick Boots', gadget: 'Speedloader' },
+  { id: 'bull', name: 'Bull', type: 'Defensa', emoji: '🐂', rarity: 'rara', starPower: 'Berserker', gadget: 'T-Bone Injector' },
+  { id: 'brock', name: 'Brock', type: 'Ataque', emoji: '🚀', rarity: 'rara', starPower: 'Incendiary', gadget: 'Rocket Laces' },
+  { id: 'el-primo', name: 'El Primo', type: 'Defensa', emoji: '🤼', rarity: 'rara', starPower: 'El Fuego', gadget: 'Suplex Supplement' },
+  { id: 'barley', name: 'Barley', type: 'Ataque', emoji: '🍺', rarity: 'rara', starPower: 'Medical Use', gadget: 'Sticky Syrup Mixer' },
+  { id: 'poco', name: 'Poco', type: 'Apoyo', emoji: '🎸', rarity: 'rara', starPower: 'Da Capo!', gadget: 'Protective Tunes' },
+  { id: 'rosa', name: 'Rosa', type: 'Defensa', emoji: '🌵', rarity: 'rara', starPower: 'Plant Life', gadget: 'Grow Light' },
 
-  { id: 'llama-ferro', name: 'Llama Ferro', type: 'Ataque', emoji: '🔥', rarity: 'rara' },
-  { id: 'hielo-glacia', name: 'Hielo Glacia', type: 'Defensa', emoji: '❄️', rarity: 'rara' },
-  { id: 'doctor-pip', name: 'Doctor Pip', type: 'Apoyo', emoji: '🧪', rarity: 'rara' },
-  { id: 'trueno-rax', name: 'Trueno Rax', type: 'Ataque', emoji: '🌩️', rarity: 'rara' },
-  { id: 'muralla-don', name: 'Muralla Don', type: 'Defensa', emoji: '🧱', rarity: 'rara' },
-  { id: 'melodia-fay', name: 'Melodía Fay', type: 'Apoyo', emoji: '🎵', rarity: 'rara' },
+  { id: 'jessie', name: 'Jessie', type: 'Apoyo', emoji: '🔧', rarity: 'superrara', starPower: 'Shocky', gadget: 'Spark Plug' },
+  { id: 'dynamike', name: 'Dynamike', type: 'Ataque', emoji: '🧨', rarity: 'superrara', starPower: 'Dyna-Jump', gadget: 'Satchel Charge' },
+  { id: 'tick', name: 'Tick', type: 'Ataque', emoji: '💣', rarity: 'superrara', starPower: 'Well Done', gadget: 'Landmine Sowing' },
+  { id: '8-bit', name: '8-Bit', type: 'Ataque', emoji: '🕹️', rarity: 'superrara', starPower: 'PosiBoost Booster', gadget: 'Autoaim Software' },
+  { id: 'rico', name: 'Rico', type: 'Ataque', emoji: '🏀', rarity: 'superrara', starPower: 'Robo Retreat', gadget: 'Multiball Launcher' },
+  { id: 'darryl', name: 'Darryl', type: 'Defensa', emoji: '🛢️', rarity: 'superrara', starPower: 'Steel Hoops', gadget: 'Recoiling Rotator' },
+  { id: 'penny', name: 'Penny', type: 'Ataque', emoji: '🏴‍☠️', rarity: 'superrara', starPower: 'Trick Shot', gadget: 'Heavy Coffers' },
+  { id: 'carl', name: 'Carl', type: 'Ataque', emoji: '⛏️', rarity: 'superrara', starPower: 'Power Throw', gadget: 'Heat Rush' },
+  { id: 'jacky', name: 'Jacky', type: 'Defensa', emoji: '🚧', rarity: 'superrara', starPower: 'Pneumatic Booster', gadget: 'Hardhat' },
 
-  { id: 'veneno-kro', name: 'Veneno Kro', type: 'Ataque', emoji: '☠️', rarity: 'epica' },
-  { id: 'coraza-beto', name: 'Coraza Beto', type: 'Defensa', emoji: '🐢', rarity: 'epica' },
-  { id: 'chaman-uli', name: 'Chamán Uli', type: 'Apoyo', emoji: '🌀', rarity: 'epica' },
-  { id: 'cometa-zoe', name: 'Cometa Zoe', type: 'Ataque', emoji: '☄️', rarity: 'epica' },
-  { id: 'fortin-max', name: 'Fortín Max', type: 'Defensa', emoji: '🏰', rarity: 'epica' },
+  { id: 'bo', name: 'Bo', type: 'Ataque', emoji: '🏹', rarity: 'epica', starPower: 'Circling Eagle', gadget: 'Tripwire' },
+  { id: 'emz', name: 'Emz', type: 'Ataque', emoji: '💄', rarity: 'epica' },
+  { id: 'stu', name: 'Stu', type: 'Ataque', emoji: '🏎️', rarity: 'epica' },
+  { id: 'piper', name: 'Piper', type: 'Ataque', emoji: '☂️', rarity: 'epica' },
+  { id: 'frank', name: 'Frank', type: 'Defensa', emoji: '🔨', rarity: 'epica' },
+  { id: 'bibi', name: 'Bibi', type: 'Ataque', emoji: '🏏', rarity: 'epica' },
+  { id: 'bea', name: 'Bea', type: 'Ataque', emoji: '🐝', rarity: 'epica', starPower: 'Insta-Beeload', gadget: 'Honey Molasses' },
+  { id: 'edgar', name: 'Edgar', type: 'Ataque', emoji: '🥊', rarity: 'epica' },
+  { id: 'gale', name: 'Gale', type: 'Apoyo', emoji: '❄️', rarity: 'epica' },
+  { id: 'colette', name: 'Colette', type: 'Ataque', emoji: '🍳', rarity: 'epica' },
+  { id: 'berry', name: 'Berry', type: 'Apoyo', emoji: '🍓', rarity: 'epica', starPower: 'Floor Is Fine', gadget: 'Friendship Is Great' },
+  { id: 'meeple', name: 'Meeple', type: 'Apoyo', emoji: '🎲', rarity: 'epica', starPower: 'Do Not Pass Go', gadget: 'Mansions Of Meeple' },
 
-  { id: 'estelar-nova', name: 'Estelar Nova', type: 'Apoyo', emoji: '🌟', rarity: 'mitica' },
-  { id: 'puno-rok', name: 'Puño Rok', type: 'Ataque', emoji: '👊', rarity: 'mitica' },
-  { id: 'escudo-vega', name: 'Escudo Vega', type: 'Defensa', emoji: '🔰', rarity: 'mitica' },
+  { id: 'mortis', name: 'Mortis', type: 'Ataque', emoji: '🧛', rarity: 'mitica', starPower: 'Creepy Harvest', gadget: 'Combo Spinner' },
+  { id: 'tara', name: 'Tara', type: 'Apoyo', emoji: '🔮', rarity: 'mitica' },
+  { id: 'gene', name: 'Gene', type: 'Apoyo', emoji: '🧞', rarity: 'mitica' },
+  { id: 'max', name: 'Max', type: 'Apoyo', emoji: '👟', rarity: 'mitica' },
+  { id: 'mr-p', name: 'Mr. P', type: 'Apoyo', emoji: '🧳', rarity: 'mitica' },
+  { id: 'sprout', name: 'Sprout', type: 'Apoyo', emoji: '🌱', rarity: 'mitica' },
+  { id: 'chuck', name: 'Chuck', type: 'Apoyo', emoji: '🎫', rarity: 'mitica' },
+  { id: 'charlie', name: 'Charlie', type: 'Apoyo', emoji: '🕷️', rarity: 'mitica', starPower: 'Digestive', gadget: 'Spiders' },
+  { id: 'mico', name: 'Mico', type: 'Ataque', emoji: '🐒', rarity: 'mitica', starPower: 'Monkey Business', gadget: 'Clipping Scream' },
+  { id: 'melodie', name: 'Melodie', type: 'Ataque', emoji: '🎧', rarity: 'mitica', starPower: 'Fast Beats', gadget: 'Perfect Pitch' },
+  { id: 'lily', name: 'Lily', type: 'Ataque', emoji: '🌸', rarity: 'mitica', starPower: 'Spiky', gadget: 'Vanish' },
+  { id: 'moe', name: 'Moe', type: 'Ataque', emoji: '🎳', rarity: 'mitica', starPower: 'Skipping Stones', gadget: 'Dodgy Digging' },
 
-  { id: 'curandera-bibi', name: 'Curandera Bibi', type: 'Apoyo', emoji: '💫', rarity: 'legendaria' },
-  { id: 'rayo-fenn', name: 'Rayo Fenn', type: 'Ataque', emoji: '🐉', rarity: 'legendaria' }
+  { id: 'spike', name: 'Spike', type: 'Ataque', emoji: '🎯', rarity: 'legendaria', starPower: 'Fast Growth', gadget: 'Popping Pincushion' },
+  { id: 'crow', name: 'Crow', type: 'Ataque', emoji: '🦅', rarity: 'legendaria', starPower: 'Extra Toxic', gadget: 'Defense Booster' },
+  { id: 'leon', name: 'Leon', type: 'Ataque', emoji: '🃏', rarity: 'legendaria', starPower: 'Smoke Trails', gadget: 'Lollipop Drop' },
+  { id: 'sandy', name: 'Sandy', type: 'Apoyo', emoji: '💤', rarity: 'legendaria' },
+  { id: 'amber', name: 'Amber', type: 'Ataque', emoji: '🔥', rarity: 'legendaria' },
+  { id: 'meg', name: 'Meg', type: 'Ataque', emoji: '🤖', rarity: 'legendaria' },
+  { id: 'kit', name: 'Kit', type: 'Ataque', emoji: '🐱', rarity: 'legendaria', starPower: 'Power Hungry', gadget: 'Cardboard Box' },
+  { id: 'draco', name: 'Draco', type: 'Defensa', emoji: '🐲', rarity: 'legendaria', starPower: 'Expose', gadget: 'Upper Cut' },
+
+  { id: 'sirius', name: 'Sirius', type: 'Apoyo', emoji: '🌘', rarity: 'ultralegendaria', starPower: 'Dusk Runners', gadget: 'A Starr Is Born' },
+  { id: 'kaze', name: 'Kaze', type: 'Ataque', emoji: '🥷', rarity: 'ultralegendaria', starPower: 'Advanced Techniques', gadget: 'Gracious Host' }
 ];
 
-/* ---------- Datos: skins originales (12), cada una ligada a un personaje ---------- */
+/* ---------- Datos: skins (20), cada una ligada a un brawler real ----------
+   Línea "Golden" = línea de skins real y recurrente de Brawl Stars.
+   "Sheriff Colt", "Werewolf Leon" y "Punk Shelly" son skins reales.
+   El resto son nombres de estilo realista curados por el autor (no
+   verificados uno a uno), siguiendo las convenciones de nombres de
+   skins del juego. Ningún artwork oficial: solo texto y emoji. */
 const SKINS = [
-  { id: 'skin-neon-artico', name: 'Neón Ártico', charId: 'hielo-glacia', rarity: 'rara', emoji: '🧊' },
-  { id: 'skin-fuego-cosmico', name: 'Fuego Cósmico', charId: 'llama-ferro', rarity: 'epica', emoji: '🌠' },
-  { id: 'skin-sombra-real', name: 'Sombra Real', charId: 'sombra-kex', rarity: 'mitica', emoji: '👑' },
-  { id: 'skin-cristal-lunar', name: 'Cristal Lunar', charId: 'estelar-nova', rarity: 'rara', emoji: '🔮' },
-  { id: 'skin-dorado-imperial', name: 'Dorado Imperial', charId: 'curandera-bibi', rarity: 'legendaria', emoji: '🏆' },
-  { id: 'skin-pixel-retro', name: 'Pixel Retro', charId: 'chispa-voltia', rarity: 'comun', emoji: '🕹️' },
-  { id: 'skin-tormenta-electrica', name: 'Tormenta Eléctrica', charId: 'trueno-rax', rarity: 'epica', emoji: '🌪️' },
-  { id: 'skin-selva-mistica', name: 'Selva Mística', charId: 'brisa-nix', rarity: 'comun', emoji: '🌴' },
-  { id: 'skin-robot-galactico', name: 'Robot Galáctico', charId: 'muralla-don', rarity: 'rara', emoji: '🤖' },
-  { id: 'skin-fantasma-estelar', name: 'Fantasma Estelar', charId: 'puno-rok', rarity: 'mitica', emoji: '👻' },
-  { id: 'skin-arcoiris-prisma', name: 'Arcoíris Prisma', charId: 'rayo-fenn', rarity: 'legendaria', emoji: '🌈' },
-  { id: 'skin-magma-ardiente', name: 'Magma Ardiente', charId: 'cometa-zoe', rarity: 'epica', emoji: '🌋' }
+  { id: 'golden-shelly', name: 'Golden Shelly', charId: 'shelly', rarity: 'epica', emoji: '🟡' },
+  { id: 'golden-colt', name: 'Golden Colt', charId: 'colt', rarity: 'epica', emoji: '🟡' },
+  { id: 'golden-bull', name: 'Golden Bull', charId: 'bull', rarity: 'epica', emoji: '🟡' },
+  { id: 'golden-nita', name: 'Golden Nita', charId: 'nita', rarity: 'epica', emoji: '🟡' },
+  { id: 'golden-el-primo', name: 'Golden El Primo', charId: 'el-primo', rarity: 'epica', emoji: '🟡' },
+  { id: 'golden-poco', name: 'Golden Poco', charId: 'poco', rarity: 'epica', emoji: '🟡' },
+  { id: 'golden-jessie', name: 'Golden Jessie', charId: 'jessie', rarity: 'epica', emoji: '🟡' },
+  { id: 'golden-brock', name: 'Golden Brock', charId: 'brock', rarity: 'epica', emoji: '🟡' },
+  { id: 'golden-kaze', name: 'Golden Kaze', charId: 'kaze', rarity: 'ultralegendaria', emoji: '🟡' },
+
+  { id: 'sheriff-colt', name: 'Sheriff Colt', charId: 'colt', rarity: 'rara', emoji: '⭐' },
+  { id: 'werewolf-leon', name: 'Werewolf Leon', charId: 'leon', rarity: 'legendaria', emoji: '🐺' },
+  { id: 'punk-shelly', name: 'Punk Shelly', charId: 'shelly', rarity: 'rara', emoji: '🎸' },
+
+  { id: 'cyber-rosa', name: 'Cyber Rosa', charId: 'rosa', rarity: 'rara', emoji: '🤖' },
+  { id: 'ghost-spike', name: 'Ghost Spike', charId: 'spike', rarity: 'mitica', emoji: '👻' },
+  { id: 'ninja-leon', name: 'Ninja Leon', charId: 'leon', rarity: 'superrara', emoji: '🥷' },
+  { id: 'toon-nita', name: 'Toon Nita', charId: 'nita', rarity: 'rara', emoji: '🎨' },
+  { id: 'retro-bull', name: 'Retro Bull', charId: 'bull', rarity: 'rara', emoji: '📼' },
+  { id: 'pharaoh-brock', name: 'Pharaoh Brock', charId: 'brock', rarity: 'mitica', emoji: '🏺' },
+  { id: 'dragon-kit', name: 'Dragon Kit', charId: 'kit', rarity: 'legendaria', emoji: '🐉' },
+  { id: 'street-jacky', name: 'Street Jacky', charId: 'jacky', rarity: 'superrara', emoji: '🛹' }
 ];
 
 /* ---------- Datos: gotas (tiers) ---------- */
 const DROP_TIERS = [
   {
     id: 'normal', name: 'Gota Normal', cost: 10, emoji: '💧',
-    odds: { comun: 55, rara: 30, epica: 12, mitica: 2.5, legendaria: 0.5 }
+    odds: { rara: 45, superrara: 30, epica: 15, mitica: 7, legendaria: 2.5, ultralegendaria: 0.5 }
   },
   {
     id: 'grande', name: 'Gota Grande', cost: 25, emoji: '🌊',
-    odds: { comun: 35, rara: 35, epica: 20, mitica: 8, legendaria: 2 }
+    odds: { rara: 25, superrara: 30, epica: 25, mitica: 13, legendaria: 5, ultralegendaria: 2 }
   },
   {
     id: 'mega', name: 'Gota Mega', cost: 60, emoji: '💎',
-    odds: { comun: 15, rara: 30, epica: 30, mitica: 18, legendaria: 7 }
+    odds: { rara: 10, superrara: 20, epica: 30, mitica: 25, legendaria: 11, ultralegendaria: 4 }
   },
   {
     id: 'especial', name: 'Gota Especial', cost: 120, emoji: '🌟',
-    odds: { comun: 5, rara: 15, epica: 30, mitica: 30, legendaria: 20 }
+    odds: { rara: 3, superrara: 10, epica: 22, mitica: 30, legendaria: 25, ultralegendaria: 10 }
   }
 ];
 
 /* ---------- Odds de tipo de recompensa según rareza ---------- */
 const TYPE_ODDS_BY_RARITY = {
-  comun: { monedas: 50, poder: 30, gadget: 15, skin: 4, personaje: 1 },
-  rara: { monedas: 40, poder: 25, gadget: 15, skin: 12, personaje: 8 },
+  rara: { monedas: 45, poder: 28, gadget: 15, skin: 8, personaje: 4 },
+  superrara: { monedas: 38, poder: 26, gadget: 14, skin: 14, personaje: 8 },
   epica: { monedas: 25, poder: 20, gadget: 10, skin: 25, personaje: 20 },
   mitica: { monedas: 15, poder: 10, gadget: 5, skin: 30, personaje: 40 },
-  legendaria: { monedas: 10, poder: 5, gadget: 5, skin: 35, personaje: 45 }
+  legendaria: { monedas: 10, poder: 5, gadget: 5, skin: 35, personaje: 45 },
+  ultralegendaria: { monedas: 5, poder: 5, gadget: 5, skin: 35, personaje: 50 }
 };
 
 const COIN_RANGE = {
-  comun: [50, 100], rara: [100, 200], epica: [250, 400], mitica: [500, 800], legendaria: [1000, 2000]
+  rara: [50, 100], superrara: [100, 200], epica: [250, 400], mitica: [500, 800], legendaria: [1000, 2000], ultralegendaria: [2000, 3500]
 };
 const POWER_RANGE = {
-  comun: [10, 25], rara: [25, 50], epica: [60, 100], mitica: [120, 200], legendaria: [250, 400]
+  rara: [10, 25], superrara: [25, 50], epica: [60, 100], mitica: [120, 200], legendaria: [250, 400], ultralegendaria: [400, 600]
 };
 const GADGET_RANGE = {
-  comun: [1, 2], rara: [2, 3], epica: [3, 5], mitica: [5, 8], legendaria: [10, 15]
+  rara: [1, 2], superrara: [2, 3], epica: [3, 5], mitica: [5, 8], legendaria: [10, 15], ultralegendaria: [15, 20]
 };
 
 /* ---------- Configuración de progresión ---------- */
@@ -306,7 +359,7 @@ function applyReward(reward) {
       break;
   }
 
-  if (reward.rarity === 'legendaria') {
+  if (reward.rarity === 'legendaria' || reward.rarity === 'ultralegendaria') {
     state.pityCounter = 0;
     state.totalLegendaries += 1;
   } else {
@@ -325,7 +378,7 @@ function rewardLabel(reward) {
     case 'monedas': return `+${reward.amount} Monedas`;
     case 'poder': return `+${reward.amount} Puntos de Poder`;
     case 'gadget': return `+${reward.amount} Gadget`;
-    case 'personaje': return `Nuevo personaje: ${reward.character.name}`;
+    case 'personaje': return `Nuevo brawler: ${reward.character.name}`;
     case 'skin': return `Nueva skin: ${reward.skin.name}`;
     default: return 'Recompensa';
   }
@@ -347,10 +400,14 @@ function rewardDesc(reward) {
     case 'monedas': return `Has recibido ${reward.amount} Monedas.`;
     case 'poder': return `Has recibido ${reward.amount} Puntos de Poder.`;
     case 'gadget': return `Has recibido ${reward.amount} Gadget nuevo${reward.amount > 1 ? 's' : ''}.`;
-    case 'personaje': return `${reward.character.name} · Tipo: ${reward.character.type}`;
+    case 'personaje': {
+      const c = reward.character;
+      const ability = c.starPower ? ` · Superpoder: ${c.starPower} · Gadget: ${c.gadget}` : '';
+      return `${c.name} · Tipo: ${c.type}${ability}`;
+    }
     case 'skin': {
       const char = CHARACTERS.find(c => c.id === reward.skin.charId);
-      return `Skin para ${char ? char.name : 'personaje'}`;
+      return `Skin para ${char ? char.name : 'brawler'}`;
     }
     default: return '';
   }
@@ -473,11 +530,16 @@ function renderCollection() {
       skinsHtml = `<div class="char-skins">Skins: 0/${charSkins.length}</div>`;
     }
 
+    const abilityHtml = (unlocked && c.starPower)
+      ? `<div class="char-ability">⭐ ${c.starPower} · 🔧 ${c.gadget}</div>`
+      : '';
+
     card.innerHTML = `
       <div class="char-icon">${unlocked ? c.emoji : '❓'}</div>
       <div class="char-name">${unlocked ? c.name : '???'}</div>
       <div class="char-type">${unlocked ? ('Tipo: ' + c.type) : 'Bloqueado'}</div>
       <span class="rarity-tag rarity-${c.rarity}">${RARITY_LABEL[c.rarity]}</span>
+      ${abilityHtml}
       ${skinsHtml}
     `;
     collectionGridEl.appendChild(card);
@@ -604,7 +666,7 @@ function showReveal(reward) {
 
   if (reward.isNew) {
     revealNew.hidden = false;
-    revealNew.textContent = reward.type === 'personaje' ? '¡Nuevo personaje desbloqueado!' : '¡Nueva skin desbloqueada!';
+    revealNew.textContent = reward.type === 'personaje' ? '¡Nuevo brawler desbloqueado!' : '¡Nueva skin desbloqueada!';
   } else {
     revealNew.hidden = true;
   }
@@ -614,7 +676,7 @@ function showReveal(reward) {
 
 function getRarityColor(rarity) {
   const map = {
-    comun: '#8fd6a8', rara: '#4db8ff', epica: '#b479ff', mitica: '#ff5fb8', legendaria: '#ffb43f'
+    rara: '#8fd6a8', superrara: '#4db8ff', epica: '#b479ff', mitica: '#ff5fb8', legendaria: '#ffb43f', ultralegendaria: '#ff4d4d'
   };
   return map[rarity];
 }

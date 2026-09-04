@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Star Drop: Simulador de Recompensas gratis</title>
-<meta name="description" content="Star Drop es un simulador gratuito para abrir gotas de recompensas, coleccionar más de 20 personajes originales y skins, y ver animaciones de apertura estilo estelar. Sin dinero real, sin anuncios, 100% en tu navegador.">
-<meta name="keywords" content="abrir gotas, simulador de recompensas, coleccionar personajes, juego gratis, gotas de estrella, skins, rarezas, mítica, legendaria, juego web móvil">
+<meta name="description" content="Star Drop es un simulador de fan gratuito e inoficial para abrir gotas de recompensas y coleccionar más de 50 brawlers reales de Brawl Stars y sus skins, con animaciones de apertura estilo estelar. Sin dinero real, sin anuncios, sin artwork oficial, 100% en tu navegador. No afiliado a Supercell.">
+<meta name="keywords" content="abrir gotas, simulador de recompensas, brawlers, brawl stars fan, coleccionar brawlers, juego gratis, gotas de estrella, skins, rarezas, mítica, legendaria, juego web móvil">
 <link rel="canonical" href="https://adrianezd.github.io/star-drop-opener/">
 
 <!-- Open Graph -->
 <meta property="og:title" content="Star Drop: Simulador de Recompensas">
-<meta property="og:description" content="Abre Gotas de Estrella, colecciona personajes y skins originales, y disfruta animaciones de apertura sin gastar dinero real.">
+<meta property="og:description" content="Abre Gotas de Estrella, colecciona brawlers reales de Brawl Stars y sus skins, y disfruta animaciones de apertura sin gastar dinero real. Fan no oficial, sin artwork oficial.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://adrianezd.github.io/star-drop-opener/">
 <meta property="og:image" content="https://adrianezd.github.io/star-drop-opener/og-image.png">
@@ -22,7 +22,7 @@
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Star Drop: Simulador de Recompensas">
-<meta name="twitter:description" content="Abre Gotas de Estrella, colecciona personajes y skins originales, y disfruta animaciones de apertura sin gastar dinero real.">
+<meta name="twitter:description" content="Abre Gotas de Estrella, colecciona brawlers reales de Brawl Stars y sus skins, y disfruta animaciones de apertura sin gastar dinero real. Fan no oficial, sin artwork oficial.">
 <meta name="twitter:image" content="https://adrianezd.github.io/star-drop-opener/og-image.png">
 
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -40,7 +40,7 @@
   "@context": "https://schema.org",
   "@type": "Game",
   "name": "Star Drop: Simulador de Recompensas",
-  "description": "Simulador gratuito para abrir gotas de recompensas, coleccionar más de 20 personajes y skins originales con animaciones de apertura estilo estelar. Sin dinero real, sin anuncios.",
+  "description": "Simulador de fan gratuito e inoficial para abrir gotas de recompensas, coleccionar más de 50 brawlers reales de Brawl Stars y sus skins, con animaciones de apertura estilo estelar. Sin dinero real, sin anuncios, sin artwork oficial. No afiliado a Supercell.",
   "genre": ["Casual", "Collector", "Simulation"],
   "applicationCategory": "GameApplication",
   "gamePlatform": "Web Browser",
@@ -103,9 +103,9 @@
     <ol class="how-list">
       <li>Acumulas <strong>Fichas de Estrella</strong> gratis con el tiempo, sin pagar nunca nada real.</li>
       <li>Usa las fichas para <strong>abrir Gotas</strong> de distinta rareza y mira la animación de apertura.</li>
-      <li>Cada gota entrega Monedas, Puntos de Poder, Gadgets, un <strong>Personaje nuevo</strong> o una <strong>Skin</strong>.</li>
-      <li>Cuantas más rachas sin Legendaria, más sube tu suerte: hay un sistema de <strong>piedad</strong> que garantiza una recompensa Legendaria como muy tarde cada 30 gotas.</li>
-      <li>Colecciona los más de 20 personajes originales y sus skins en la pestaña Colección.</li>
+      <li>Cada gota entrega Monedas, Puntos de Poder, Gadgets, un <strong>Brawler nuevo</strong> o una <strong>Skin</strong>.</li>
+      <li>Cuantas más rachas sin Legendaria, más sube tu suerte: hay un sistema de <strong>piedad</strong> que garantiza una recompensa Legendaria (o superior) como muy tarde cada 30 gotas.</li>
+      <li>Colecciona más de 50 brawlers reales de Brawl Stars y sus skins en la pestaña Colección.</li>
     </ol>
   </section>
 
@@ -123,7 +123,7 @@
 
   <section id="tab-collection" class="tab-panel" aria-labelledby="collection-heading">
     <h2 id="collection-heading">Tu Colección</h2>
-    <p class="collection-summary">Personajes desbloqueados: <strong id="chars-unlocked">0</strong>/<span id="chars-total">0</span> · Skins: <strong id="skins-unlocked">0</strong>/<span id="skins-total">0</span></p>
+    <p class="collection-summary">Brawlers desbloqueados: <strong id="chars-unlocked">0</strong>/<span id="chars-total">0</span> · Skins: <strong id="skins-unlocked">0</strong>/<span id="skins-total">0</span></p>
     <div id="collection-grid" class="collection-grid"></div>
   </section>
 
@@ -135,7 +135,7 @@
       <div class="stat-box"><span class="stat-value" id="stat-power">0</span><span class="stat-label">Puntos de Poder totales</span></div>
       <div class="stat-box"><span class="stat-value" id="stat-gadgets">0</span><span class="stat-label">Gadgets totales</span></div>
       <div class="stat-box"><span class="stat-value" id="stat-legendaries">0</span><span class="stat-label">Legendarias obtenidas</span></div>
-      <div class="stat-box"><span class="stat-value" id="stat-chars">0</span><span class="stat-label">Personajes nuevos</span></div>
+      <div class="stat-box"><span class="stat-value" id="stat-chars">0</span><span class="stat-label">Brawlers nuevos</span></div>
     </div>
     <h3>Historial reciente</h3>
     <ul id="history-list" class="history-list"></ul>
@@ -166,8 +166,8 @@
 </div>
 
 <footer class="app-footer">
-  <p>Proyecto de fan hecho por diversión, sin dinero real ni compras. No afiliado a ninguna franquicia comercial existente.</p>
-  <p class="footer-small">Todos los personajes, skins y nombres son ficticios y originales. Progreso guardado solo en este navegador.</p>
+  <p><strong>Proyecto de fan no oficial. No afiliado a Supercell.</strong> Nombres y datos de brawlers usados con fines de homenaje, sin artwork oficial.</p>
+  <p class="footer-small">Hecho por diversión, sin dinero real ni compras. Iconos con emoji y estilo visual 100% originales. Progreso guardado solo en este navegador.</p>
 </footer>
 
 <script src="script.js"></script>

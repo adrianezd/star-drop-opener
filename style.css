@@ -8,11 +8,12 @@
   --text-dim: #94919f;
   --ink: #121116;
 
-  --c-comun: #7ed9a3;
-  --c-rara: #4db8ff;
+  --c-rara: #7ed9a3;
+  --c-superrara: #4db8ff;
   --c-epica: #b083ff;
   --c-mitica: #ff6fc4;
   --c-legendaria: #ffb43f;
+  --c-ultralegendaria: #ff4d4d;
 
   --radius: 14px;
   --safe-top: env(safe-area-inset-top, 0px);
@@ -339,11 +340,19 @@ main {
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
-.rarity-comun { background: rgba(126,217,163,0.14); color: var(--c-comun); }
-.rarity-rara { background: rgba(77,184,255,0.14); color: var(--c-rara); }
+.rarity-rara { background: rgba(126,217,163,0.14); color: var(--c-rara); }
+.rarity-superrara { background: rgba(77,184,255,0.14); color: var(--c-superrara); }
 .rarity-epica { background: rgba(176,131,255,0.14); color: var(--c-epica); }
 .rarity-mitica { background: rgba(255,111,196,0.14); color: var(--c-mitica); }
 .rarity-legendaria { background: rgba(255,180,63,0.16); color: var(--c-legendaria); }
+.rarity-ultralegendaria { background: rgba(255,77,77,0.16); color: var(--c-ultralegendaria); }
+
+.char-ability {
+  margin-top: 6px;
+  font-size: 0.66rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
 
 .char-skins {
   margin-top: 8px;
@@ -520,11 +529,12 @@ body.shaking { animation: shakeBody 0.4s ease-in-out; }
   70% { transform: scale(1.08); opacity: 1; }
   100% { transform: scale(1); }
 }
-.reveal-card.rarity-comun-card { box-shadow: 0 0 30px rgba(126,217,163,0.4); border-color: var(--c-comun); }
-.reveal-card.rarity-rara-card { box-shadow: 0 0 34px rgba(77,184,255,0.45); border-color: var(--c-rara); }
+.reveal-card.rarity-rara-card { box-shadow: 0 0 30px rgba(126,217,163,0.4); border-color: var(--c-rara); }
+.reveal-card.rarity-superrara-card { box-shadow: 0 0 34px rgba(77,184,255,0.45); border-color: var(--c-superrara); }
 .reveal-card.rarity-epica-card { box-shadow: 0 0 38px rgba(176,131,255,0.5); border-color: var(--c-epica); }
 .reveal-card.rarity-mitica-card { box-shadow: 0 0 46px rgba(255,111,196,0.6); border-color: var(--c-mitica); animation: revealPop 0.45s cubic-bezier(.2,1.4,.4,1) both, pulseGlowM 1.4s ease-in-out infinite 0.45s; }
 .reveal-card.rarity-legendaria-card { box-shadow: 0 0 60px rgba(255,180,63,0.75); border-color: var(--c-legendaria); animation: revealPop 0.45s cubic-bezier(.2,1.4,.4,1) both, pulseGlowL 1.2s ease-in-out infinite 0.45s; }
+.reveal-card.rarity-ultralegendaria-card { box-shadow: 0 0 70px rgba(255,77,77,0.8); border-color: var(--c-ultralegendaria); animation: revealPop 0.45s cubic-bezier(.2,1.4,.4,1) both, pulseGlowU 1.05s ease-in-out infinite 0.45s; }
 @keyframes pulseGlowM {
   0%, 100% { box-shadow: 0 0 30px rgba(255,111,196,0.45); }
   50% { box-shadow: 0 0 55px rgba(255,111,196,0.8); }
@@ -532,6 +542,10 @@ body.shaking { animation: shakeBody 0.4s ease-in-out; }
 @keyframes pulseGlowL {
   0%, 100% { box-shadow: 0 0 40px rgba(255,180,63,0.55); }
   50% { box-shadow: 0 0 80px rgba(255,180,63,0.95); }
+}
+@keyframes pulseGlowU {
+  0%, 100% { box-shadow: 0 0 45px rgba(255,77,77,0.6); }
+  50% { box-shadow: 0 0 95px rgba(255,77,77,1); }
 }
 
 .reveal-rarity {

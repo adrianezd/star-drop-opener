@@ -1,7 +1,7 @@
 {
   "name": "Star Drop: Simulador de Recompensas",
   "short_name": "Star Drop",
-  "description": "Abre Gotas de Estrella, colecciona personajes y skins originales, sin dinero real.",
+  "description": "Abre Gotas de Estrella, colecciona brawlers reales de Brawl Stars y sus skins, sin dinero real. Fan no oficial, no afiliado a Supercell.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
