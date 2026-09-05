@@ -482,7 +482,10 @@ function renderDropGrid() {
     const oddsText = RARITIES.map(r => `${RARITY_LABEL[r]} ${tier.odds[r]}%`).join(' · ');
 
     card.innerHTML = `
-      <div class="drop-orb-preview">${tier.emoji}</div>
+      <div class="drop-orb-preview">
+        <svg class="drop-star-svg" viewBox="0 0 100 100" aria-hidden="true"><use href="#star-drop-shape"></use></svg>
+        <span class="drop-star-emoji">${tier.emoji}</span>
+      </div>
       <div class="drop-name">${tier.name}</div>
       <div class="drop-odds">${oddsText}</div>
       <div class="drop-cost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 L14 10 L21 12 L14 14 L12 21 L10 14 L3 12 L10 10 Z"/></svg> ${tier.cost}</div>
@@ -602,7 +605,22 @@ function tickTimers() {
   saveState();
 }
 
-/* ---------- Apertura de gotas ---------- */
+/* ---------- Apertura de gotas ----------
+   El resultado se calcula ANTES de que empiece la animación de apertura
+   (generateReward es una función pura: solo lee el estado, no lo muta) para
+   que la grieta de la estrella pueda escalar en intensidad según la rareza
+   obtenida, igual que en el juego real, donde la apertura de una gota ya
+   "anticipa" visualmente lo especial que es la recompensa. El estado solo se
+   muta al final, en finishOpen, con applyReward. */
+const OPEN_ANIM_MS = 1000;
+
+function fxLevelForRarity(rarity) {
+  if (rarity === 'legendaria' || rarity === 'ultralegendaria') return 'max';
+  if (rarity === 'mitica') return 'high';
+  if (rarity === 'epica') return 'mid';
+  return 'base';
+}
+
 function startOpen(tierId) {
   const tier = DROP_TIERS.find(t => t.id === tierId);
   if (!tier || state.fichas < tier.cost) return;
@@ -613,30 +631,36 @@ function startOpen(tierId) {
   refreshDropButtons();
   saveState();
 
+  const reward = generateReward(tier);
+
   openOrbIcon.textContent = tier.emoji;
   openOrb.className = 'open-orb';
+  openOrb.dataset.tier = tier.id;
+  delete openOrb.dataset.fx;
+  openOrb.style.removeProperty('--rarity-glow');
   openHint.textContent = 'Toca la gota para abrirla';
   openOverlay.hidden = false;
 
   const handler = () => {
     openOrb.removeEventListener('click', handler);
     openHint.textContent = 'Abriendo...';
+    openOrb.dataset.fx = fxLevelForRarity(reward.rarity);
+    openOrb.style.setProperty('--rarity-glow', getRarityColor(reward.rarity));
     openOrb.classList.add('spinning');
-    setTimeout(() => finishOpen(tier), 950);
+    setTimeout(() => finishOpen(tier, reward), OPEN_ANIM_MS);
   };
   openOrb.addEventListener('click', handler);
 }
 
-function finishOpen(tier) {
+function finishOpen(tier, reward) {
   openOverlay.hidden = true;
   openOrb.classList.remove('spinning');
 
-  const reward = generateReward(tier);
   applyReward(reward);
   saveState();
 
   spawnParticles(reward.rarity);
-  if (reward.rarity === 'mitica' || reward.rarity === 'legendaria') {
+  if (reward.rarity === 'mitica' || reward.rarity === 'legendaria' || reward.rarity === 'ultralegendaria') {
     triggerShake();
   }
 
@@ -686,8 +710,12 @@ revealContinue.addEventListener('click', () => {
 });
 
 /* ---------- Partículas ---------- */
+const PARTICLE_COUNT_BY_RARITY = {
+  rara: 10, superrara: 12, epica: 18, mitica: 28, legendaria: 40, ultralegendaria: 55
+};
+
 function spawnParticles(rarity) {
-  const count = rarity === 'legendaria' ? 40 : rarity === 'mitica' ? 28 : rarity === 'epica' ? 18 : 12;
+  const count = PARTICLE_COUNT_BY_RARITY[rarity] || 12;
   const color = getRarityColor(rarity);
   const cx = window.innerWidth / 2;
   const cy = window.innerHeight / 2;
